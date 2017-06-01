@@ -17,7 +17,8 @@ var cacheName = 'weatherPWA-final-2';
 var filesToCache = [
     '/',
     '/index.html',
-    '/server.js'
+    '/server.js',
+    '/src/my_app.html'
 ];
 
 self.addEventListener('install', function(e) {
