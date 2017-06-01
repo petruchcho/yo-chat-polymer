@@ -1,0 +1,232 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+
+<link rel="import" href="my-icons.html">
+
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
+<dom-module id="my-app">
+    <template>
+        <style>
+            :host {
+                --app-primary-color: #4285f4;
+                --app-secondary-color: black;
+
+                display: block;
+            }
+
+            app-header {
+                color: #fff;
+                background-color: var(--app-primary-color);
+            }
+
+            .chatContent {
+                height: 100%;
+                background-color: white;
+
+                width: 50%;
+                margin: 0 auto;
+
+                min-height: 100vh;
+                min-width: 800px;
+            }
+
+            .body {
+                margin: 0;
+                background-color: #ededed;
+                font-family: 'Roboto', sans-serif;
+            }
+
+            /*::-webkit-scrollbar {*/
+            /*display: none;*/
+            /*}*/
+
+            #header {
+                position: fixed;
+                width: 100%;
+                z-index: 2000;
+            }
+
+            .flex-container {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #b {
+                position: fixed;
+                right: 24px;
+                bottom: 24px;
+            }
+
+            #chatMessage {
+                padding: 24px 24px 24px 180px;
+            }
+
+            #divider {
+                height: 1px;
+                background: #ededed;
+            }
+        </style>
+
+        <app-location route="{{route}}"></app-location>
+        <app-route
+                route="{{route}}"
+                pattern="/:page"
+                data="{{routeData}}"
+                tail="{{subroute}}"></app-route>
+
+        <paper-dialog id="dialog">
+            <paper-dialog-scrollable>
+                Enter your name
+                <paper-input label="Awesome user" id="username"></paper-input>
+            </paper-dialog-scrollable>
+            <div class="buttons">
+                <paper-button dialog-confirm autofocus id="acceptName">Accept</paper-button>
+            </div>
+        </paper-dialog>
+
+        <div class="body">
+            <app-header slot="header" condenses reveals effects="waterfall" id="header">
+                <app-toolbar>
+                    <div main-title>Yo</div>
+                </app-toolbar>
+            </app-header>
+
+            <div class="flex-container">
+                <paper-material elevation="3" class="chatContent">
+                    <ul class="list" style="padding-top: 64px; list-style-type: none; -webkit-padding-start: 0"
+                        id="messages">
+                    </ul>
+                </paper-material>
+            </div>
+
+            <paper-fab id="b" style="background-color: tomato; width: 128px; height: 128px" label="YO!">
+            </paper-fab>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'my-app',
+
+            properties: {
+                page: {
+                    type: String,
+                    reflectToAttribute: true,
+                    observer: '_pageChanged'
+                }
+            },
+
+            ready: function () {
+                var userId = -1;
+                var userName;
+
+                this.$.dialog.toggle();
+                var _this = this;
+                this.$.dialog.addEventListener('iron-overlay-closed', function (ev) {
+                    var name = _this.$.username.value;
+                    if (name && name.length > 0) {
+                        userName = name;
+                    } else {
+                        userName = 'Anonymous';
+                    }
+                    console.log(userName);
+                });
+
+                var socket = new WebSocket("ws://1ecb75a8.ngrok.io:80");
+
+                socket.onmessage = function (message) {
+                    console.log(JSON.stringify(message.data));
+                    var json = JSON.parse(message.data);
+                    console.log('I got this: ' + JSON.stringify(json));
+                    switch (json.type) {
+                        case 'connected':
+                            if (userId < 0) {
+                                userId = json.userId;
+                                console.log("Set userId to " + userId);
+                            }
+                            break;
+                        case 'chat message':
+                            console.log("message received: " + JSON.stringify(json));
+                            addMessage(json, true);
+                            break;
+                        case 'batch':
+                            if (json.userId === userId) {
+                                for (var i = 0; i < json.data.length; i++) {
+                                    addMessage(json.data[i], false);
+                                }
+                            }
+                    }
+                };
+
+                this.$.b.addEventListener('tap', function () {
+                    console.log(userName);
+                    socket.send(JSON.stringify({type: 'chat message', userName: userName, sendDate: new Date()}));
+                    return false;
+                });
+//
+//                socket.on('batch', function (messages, id) {
+//                    if (id === userId) {
+//                        for (var i = 0; i < messages.length; i++) {
+//                            addMessage(messages[i], false);
+//                        }
+//                    }
+//                });
+
+                window.onscroll = function (ev) {
+                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 1) {
+                        socket.send(JSON.stringify({type: 'request batch', userId: userId, count: _this.$.messages.getElementsByTagName("li").length / 2}));
+                        //socket.emit('request batch', _this.$.messages.getElementsByTagName("li").length / 2, userId);
+                    }
+                };
+
+                var removeMessages = function () {
+                    $('#messages').empty();
+                };
+
+                function addMessage (msg, newOne) {
+                    var inner = '<li id="chatMessage">'
+                        + '<h4>' + msg.userName + '</h4>'
+                        + '<p style="font-size: 21px">YO!</p>'
+                        + '<p align="right" style="font-size: 12px">' + msg.sendDate + '</p>'
+                        + '</li>'
+                        + '<li id="divider"/>';
+
+                    if (newOne) {
+                        _this.$.messages.innerHTML = inner + _this.$.messages.innerHTML;
+                    } else {
+                        _this.$.messages.innerHTML = _this.$.messages.innerHTML + inner;
+                    }
+                }
+            }
+        });
+    </script>
+</dom-module>
