@@ -1,5 +1,14 @@
 var WebSocketServer = require('websocket').server;
 var http = require('http');
+var express = require('express');
+var app = express();
+
+app.use(express.static(__dirname + '/public'));
+app.use('/bower_components',  express.static(__dirname + '/bower_components'));
+
+app.get('/', function(req, res){
+    res.sendFile(__dirname + '/index.html');
+});
 
 var server = http.createServer(function (request, response) {
     // process HTTP request. Since we're writing just WebSockets
