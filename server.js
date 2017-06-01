@@ -19,7 +19,8 @@ server.listen(3000, function () {
 
 // create the server
 wsServer = new WebSocketServer({
-    httpServer: server
+    httpServer: server,
+    rejectUnauthorized: false
 });
 
 var BATCH_SIZE = 6;
