@@ -1,5 +1,5 @@
 var WebSocketServer = require('websocket').server;
-var http = require('http');
+var http = require('https');
 var express = require('express');
 var app = express();
 
@@ -14,7 +14,7 @@ var server = http.createServer(function (request, response) {
     // process HTTP request. Since we're writing just WebSockets
     // server we don't have to implement anything.
 });
-server.listen(3000, function () {
+server.listen(4433, function () {
 });
 
 // create the server
