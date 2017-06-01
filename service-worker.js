@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var dataCacheName = 'weatherData-v1';
-var cacheName = 'weatherPWA-final-1';
+var dataCacheName = 'weatherData-v2';
+var cacheName = 'weatherPWA-final-2';
 var filesToCache = [
     '/',
     '/index.html',
@@ -21,7 +21,7 @@ var filesToCache = [
 ];
 
 self.addEventListener('install', function(e) {
-    console.log('[ServiceWorker] Install');
+    console.log('[ServiceWorker] Install ssssssssssssssssssssssssssss');
     e.waitUntil(
         caches.open(cacheName).then(function(cache) {
             console.log('[ServiceWorker] Caching app shell');
