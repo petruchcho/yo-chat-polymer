@@ -30,6 +30,7 @@ wsServer.on('request', function (request) {
 
     console.log('a user connected');
     connection.sendUTF(JSON.stringify({type: 'connected', userId: userId}));
+    connection.id = userId;
 
     connections.push(connection);
 
@@ -46,6 +47,7 @@ wsServer.on('request', function (request) {
                 console.log('chat message, connections size = ' + connections.length);
                 saveMessage(json);
                 for (var i = 0; i < connections.length; i++) {
+                    console.log("connection.id = " + connections[i].id);
                     connections[i].sendUTF(JSON.stringify(json));
                 }
                 // io.emit('chat message', msg);
@@ -56,10 +58,10 @@ wsServer.on('request', function (request) {
         }
     });
 
-    connection.on('close', function (connection) {
-        console.log("close connection when we have " + connections.length);
+    connection.on('close', function () {
+        console.log("close connection #" + connection.id + "when we have " + connections.length);
         connections = connections.filter(function(x) {
-            return x !== connection;
+            return x.id !== connection.id;
         });
         console.log("after closing " + connections.length);
     });
