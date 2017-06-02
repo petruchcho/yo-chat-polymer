@@ -1,31 +1,23 @@
 var WebSocketServer = require('websocket').server;
-var http = require('https');
-var express = require('express');
-var app = express();
-
-app.use(express.static(__dirname + '/public'));
-app.use('/bower_components',  express.static(__dirname + '/bower_components'));
-
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html');
-});
+var http = require('http');
 
 var server = http.createServer(function (request, response) {
     // process HTTP request. Since we're writing just WebSockets
     // server we don't have to implement anything.
 });
-server.listen(function () {
+server.listen(3000, function () {
 });
 
 // create the server
 wsServer = new WebSocketServer({
-    httpServer: server,
-    rejectUnauthorized: false
+    httpServer: server
 });
 
 var BATCH_SIZE = 6;
 var messages = [];
 var userId = 0;
+
+var connections = [];
 
 // WebSocket server
 wsServer.on('request', function (request) {
@@ -39,8 +31,9 @@ wsServer.on('request', function (request) {
     console.log('a user connected');
     connection.sendUTF(JSON.stringify({type: 'connected', userId: userId}));
 
-    sendBatch(0, userId++);
+    connections.push(connection);
 
+    sendBatch(0, userId++);
 
     // This is the most important callback for us, we'll handle
     // all messages from users here.
@@ -50,10 +43,12 @@ wsServer.on('request', function (request) {
         var json = JSON.parse(message.utf8Data);
         switch (json.type) {
             case 'chat message':
-                console.log('chat message');
+                console.log('chat message, connections size = ' + connections.length);
                 saveMessage(json);
-                connection.sendUTF(JSON.stringify(json));
-               // io.emit('chat message', msg);
+                for (var i = 0; i < connections.length; i++) {
+                    connections[i].sendUTF(JSON.stringify(json));
+                }
+                // io.emit('chat message', msg);
                 break;
             case 'request batch':
                 console.log('batch requested with offset = ' + json.count);
@@ -62,7 +57,11 @@ wsServer.on('request', function (request) {
     });
 
     connection.on('close', function (connection) {
-        // close user connection
+        console.log("close connection when we have " + connections.length);
+        connections = connections.filter(function(x) {
+            return x !== connection;
+        });
+        console.log("after closing " + connections.length);
     });
 
     function sendBatch(start, id) {
