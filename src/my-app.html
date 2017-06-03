@@ -176,6 +176,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             break;
                         case 'chat message':
                             console.log("message received: " + JSON.stringify(json));
+                            saveObject(json, "messagesStore");
                             addMessage(json, true);
                             break;
                         case 'batch':
@@ -186,6 +187,63 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             }
                     }
                 };
+
+                var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+                var IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+
+                socket.onerror = function (p1) {
+                    console.log("OFFLINE DETECTED CACHE ACTIVATED");
+                    loadLastMessages();
+                };
+
+                function connectDB(f) {
+                    var request = indexedDB.open("myBaseMessages", 1);
+                    request.onerror = function (err) {
+                        console.log(err);
+                    };
+                    request.onsuccess = function () {
+                        f(request.result);
+                    };
+                    request.onupgradeneeded = function (e) {
+                        e.currentTarget.result.createObjectStore("messagesStore", {keyPath: "id", autoIncrement: true});
+                        connectDB(f);
+                    }
+                }
+
+                function saveObject(message, store) {
+                    connectDB(function (db) {
+                        var request = db.transaction([store], "readwrite").objectStore(store).put(message);
+                        request.onerror = logerr;
+                        request.onsuccess = function () {
+                            return request.result;
+                        }
+                    });
+                }
+
+                function loadLastMessages() {
+                    connectDB(function (db) {
+                        var rows = [],
+                            store = db.transaction(["messagesStore"], "readonly").objectStore("messagesStore");
+
+                        store.openCursor().onsuccess = function (e) {
+                            var cursor = e.target.result;
+                            if (cursor) {
+                                rows.push(cursor.value);
+                                cursor.continue();
+                            }
+                            else {
+                                rows.sort(function(a, b) {
+                                    a = new Date(a.date);
+                                    b = new Date(b.date);
+                                    return a > b ? 1 : a < b ? -1 : 0;
+                                });
+                                for (var i = 0; i < Math.min(rows.length, 20); i++) {
+                                    addMessage(rows[i], true);
+                                }
+                            }
+                        };
+                    });
+                }
 
                 this.$.b.addEventListener('tap', function () {
                     console.log(userName);
