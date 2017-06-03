@@ -166,7 +166,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 socket.onmessage = function (message) {
                     console.log(JSON.stringify(message.data));
                     var json = JSON.parse(message.data);
-                    console.log('I got this: ' + JSON.stringify(json));
+                    console.log('I1 got this: ' + JSON.stringify(json));
                     switch (json.type) {
                         case 'connected':
                             if (userId < 0) {

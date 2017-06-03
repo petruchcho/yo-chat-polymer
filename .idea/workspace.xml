@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5b54d38e-2ca9-481f-88f0-8ed5a4ab380a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/polymer.json" afterPath="$PROJECT_DIR$/polymer.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/my-app.html" afterPath="$PROJECT_DIR$/src/my-app.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -21,12 +21,22 @@
       <file leaf-file-name="my-app.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/my-app.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="216" column="57" lean-forward="true" selection-start-line="216" selection-start-column="57" selection-end-line="216" selection-end-column="57" />
+            <state relative-caret-position="228">
+              <caret line="173" column="22" lean-forward="false" selection-start-line="173" selection-start-column="22" selection-end-line="173" selection-end-column="22" />
               <folding>
-                <marker date="1496466565322" expanded="true" signature="11086:11101" ph="..." />
-                <marker date="1496466565322" expanded="true" signature="11163:11178" ph="..." />
+                <marker date="1496467225684" expanded="true" signature="11087:11102" ph="..." />
+                <marker date="1496467225684" expanded="true" signature="11164:11179" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="polymer.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/polymer.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" column="9" lean-forward="false" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -78,6 +88,7 @@
       <find>http</find>
       <find>inli</find>
       <find>min</find>
+      <find>i go</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -93,8 +104,8 @@
         <option value="$PROJECT_DIR$/service-worker.js" />
         <option value="$PROJECT_DIR$/build/default/server.js" />
         <option value="$PROJECT_DIR$/server.js" />
-        <option value="$PROJECT_DIR$/polymer.json" />
         <option value="$PROJECT_DIR$/build/default/service-worker.js" />
+        <option value="$PROJECT_DIR$/polymer.json" />
         <option value="$PROJECT_DIR$/src/my-app.html" />
       </list>
     </option>
@@ -267,12 +278,12 @@
       <workItem from="1496252383260" duration="7019000" />
       <workItem from="1496329385615" duration="8435000" />
       <workItem from="1496341998047" duration="12130000" />
-      <workItem from="1496464387556" duration="2221000" />
+      <workItem from="1496464387556" duration="2855000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29805000" />
+    <option name="totallyTimeSpent" value="30439000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -314,8 +325,8 @@
         <state relative-caret-position="1513">
           <caret line="89" column="42" lean-forward="false" selection-start-line="89" selection-start-column="42" selection-end-line="89" selection-end-column="42" />
           <folding>
-            <marker date="1496466565322" expanded="true" signature="11086:11101" ph="..." />
-            <marker date="1496466565322" expanded="true" signature="11163:11178" ph="..." />
+            <marker date="1496467225684" expanded="true" signature="11087:11102" ph="..." />
+            <marker date="1496467225684" expanded="true" signature="11164:11179" ph="..." />
           </folding>
         </state>
       </provider>
@@ -348,8 +359,8 @@
         <state relative-caret-position="4305">
           <caret line="205" column="152" lean-forward="false" selection-start-line="205" selection-start-column="152" selection-end-line="205" selection-end-column="152" />
           <folding>
-            <marker date="1496466565322" expanded="true" signature="11086:11101" ph="..." />
-            <marker date="1496466565322" expanded="true" signature="11163:11178" ph="..." />
+            <marker date="1496467225684" expanded="true" signature="11087:11102" ph="..." />
+            <marker date="1496467225684" expanded="true" signature="11164:11179" ph="..." />
           </folding>
         </state>
       </provider>
@@ -397,8 +408,8 @@
         <state relative-caret-position="924">
           <caret line="44" column="0" lean-forward="true" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
           <folding>
-            <marker date="1496466565322" expanded="true" signature="11086:11101" ph="..." />
-            <marker date="1496466565322" expanded="true" signature="11163:11178" ph="..." />
+            <marker date="1496467225684" expanded="true" signature="11087:11102" ph="..." />
+            <marker date="1496467225684" expanded="true" signature="11164:11179" ph="..." />
           </folding>
         </state>
       </provider>
@@ -480,14 +491,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/polymer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="9" lean-forward="false" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="502">
@@ -496,13 +499,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/polymer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="9" lean-forward="false" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/my-app.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="216" column="57" lean-forward="true" selection-start-line="216" selection-start-column="57" selection-end-line="216" selection-end-column="57" />
+        <state relative-caret-position="228">
+          <caret line="173" column="22" lean-forward="false" selection-start-line="173" selection-start-column="22" selection-end-line="173" selection-end-column="22" />
           <folding>
-            <marker date="1496466565322" expanded="true" signature="11086:11101" ph="..." />
-            <marker date="1496466565322" expanded="true" signature="11163:11178" ph="..." />
+            <marker date="1496467225684" expanded="true" signature="11087:11102" ph="..." />
+            <marker date="1496467225684" expanded="true" signature="11164:11179" ph="..." />
           </folding>
         </state>
       </provider>
