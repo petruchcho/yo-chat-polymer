@@ -13,7 +13,7 @@ wsServer = new WebSocketServer({
     httpServer: server
 });
 
-var BATCH_SIZE = 6;
+var BATCH_SIZE = 15;
 var messages = [];
 var userId = 0;
 

@@ -56,7 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 margin: 0 auto;
 
                 min-height: 100vh;
-                min-width: 462px;
+                min-width: 360px;
             }
 
             .body {
@@ -87,7 +87,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
 
             #chatMessage {
-                padding: 24px 24px 24px 24px;
+                padding: 0 24px 0 24px;
             }
 
             #divider {
@@ -272,9 +272,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 function addMessage (msg, newOne) {
                     var inner = '<li id="chatMessage">'
-                        + '<h4>' + msg.userName + '</h4>'
+                        + '<h4 style="text-align:left;">' + msg.userName + '<span style="font-size: 12px; float: right">' + msg.sendDate + '</span>' + '</h4>'
                         + '<p style="font-size: 21px">YO!</p>'
-                        + '<p align="right" style="font-size: 12px">' + msg.sendDate + '</p>'
                         + '</li>'
                         + '<li id="divider"/>';
 
